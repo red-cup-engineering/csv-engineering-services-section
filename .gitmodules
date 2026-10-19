@@ -1,0 +1,4 @@
+[submodule "csv-stream-triage-service"]
+	path = services/csv-stream-triage-service
+	url = https://github.com/red-cup-engineering/csv-stream-triage-service.git
+	branch = main
