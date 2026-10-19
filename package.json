@@ -5,8 +5,7 @@
   "description": "Comma-separated values (RFC 4180): the one codec for CSV text to rows and records and back.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/red-cup-engineering/computer-serialized-content-engineering-services-section.git",
-    "directory": "services/csv-services-section"
+    "url": "git+https://github.com/red-cup-engineering/csv-services-section.git"
   },
   "exports": {
     "./csv-codec": "./scripts/csv-codec.mjs",
