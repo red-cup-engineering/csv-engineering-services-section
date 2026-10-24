@@ -13,7 +13,7 @@ text into rows of fields, `decodeCsv` into records keyed by the header row, and
 hold commas, doubled quotes and line breaks, as county report exports do.
 
 ```js
-import { decodeCsv, encodeCsv } from "@red-cup-engineering/csv-services-section/csv-codec";
+import { decodeCsv, encodeCsv } from "@red-cup-engineering/csv-engineering-services-section/csv-codec";
 
 const records = decodeCsv(text);
 await writeFile("sellers.csv", encodeCsv(records));
