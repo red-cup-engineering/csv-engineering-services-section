@@ -1,6 +1,6 @@
 {
   "name": "@red-cup-engineering/csv-services-section",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "type": "module",
   "description": "Comma-separated values (RFC 4180): the one codec for CSV text to rows and records and back.",
   "repository": {
