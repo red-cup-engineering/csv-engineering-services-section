@@ -1,7 +1,7 @@
 /**
  * csv-codec — comma-separated values (RFC 4180): `decodeCsvRows` reads text into rows of fields,
- * `decodeCsv` reads it into records keyed by the header row, and `encodeCsv` writes records back
- * out. Quoted fields may hold commas, doubled quotes and line breaks; CRLF and LF line endings and
+ * `decodeCsv` reads it into records keyed by the header row, `encodeCsv` writes records back out,
+ * and `encodeCsvRows` writes plain rows of fields (minimal quoting by default). Quoted fields may hold commas, doubled quotes and line breaks; CRLF and LF line endings and
  * a leading byte-order mark are accepted. Pure string ↔ value functions, no I/O.
  * @packageDocumentation
  */
@@ -50,15 +50,37 @@ export function decodeCsv(text) {
   return rows.map((row) => Object.fromEntries(columns.map((column, index) => [column, row[index] ?? ""])));
 }
 
+const LINE_ENDINGS = ["\n", "\r\n"];
+const QUOTINGS = ["all", "minimal"];
+function admitFormat(lineEnding, quoting) {
+  if (!LINE_ENDINGS.includes(lineEnding)) throw new TypeError("CSV line ending must be LF or CRLF");
+  if (!QUOTINGS.includes(quoting)) throw new TypeError('CSV quoting must be "all" or "minimal"');
+}
+
+/** One field as RFC 4180 text: always quoted (`quoting: "all"`), or quoted only when it holds a comma,
+ *  a double quote, CR or LF (`quoting: "minimal"`). A missing value (null, undefined) is the empty field. */
+export function encodeCsvField(value, { quoting = "all" } = {}) {
+  admitFormat("\n", quoting);
+  const text = String(value ?? "");
+  return quoting === "all" || /[",\r\n]/u.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+}
+
+/** Rows of fields (a header row is just the first row) as CSV text, one line ending after every row,
+ *  fields quoted only where RFC 4180 needs it unless `quoting: "all"`. No rows is the empty text. */
+export function encodeCsvRows(rows, { lineEnding = "\n", quoting = "minimal" } = {}) {
+  admitFormat(lineEnding, quoting);
+  return rows.map((row) => `${row.map((field) => encodeCsvField(field, { quoting })).join(",")}${lineEnding}`).join("");
+}
+
 /**
- * Records as CSV text with a header row, every field quoted, LF line endings and a final newline.
- * Columns default to the first record's keys.
+ * Records as CSV text with a header row, every field quoted (`quoting: "all"`, the default; "minimal"
+ * quotes only where needed), LF line endings and a final newline. Columns default to the first
+ * record's keys.
  */
-export function encodeCsv(records, { columns = records.length ? Object.keys(records[0]) : [], lineEnding = "\n" } = {}) {
+export function encodeCsv(records, { columns = records.length ? Object.keys(records[0]) : [], lineEnding = "\n", quoting = "all" } = {}) {
+  admitFormat(lineEnding, quoting);
   if (records.length === 0) return "";
-  const cell = (value) => `"${String(value ?? "").replaceAll('"', '""')}"`;
-  if (!["\n", "\r\n"].includes(lineEnding)) throw new TypeError("CSV line ending must be LF or CRLF");
-  return [columns.map(cell).join(","), ...records.map((record) => columns.map((column) => cell(record[column])).join(","))].join(lineEnding) + lineEnding;
+  return encodeCsvRows([columns, ...records.map((record) => columns.map((column) => record[column]))], { lineEnding, quoting });
 }
 
 const limit = 65536;
