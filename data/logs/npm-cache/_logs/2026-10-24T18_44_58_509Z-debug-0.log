@@ -1,0 +1,19 @@
+0 verbose cli /home/emsenn/.local/lib/nodejs/node-v24.19.0-linux-x64/bin/node /home/emsenn/.local/bin/npm
+1 info using npm@11.17.0
+2 info using node@v24.19.0
+3 silly config load:file:/home/emsenn/.local/lib/nodejs/node-v24.19.0-linux-x64/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-data-engineering-services-section/services/computer-content-engineering-services-section/services/computer-serialized-content-engineering-services-section/services/csv-services-section/.npmrc
+5 silly config load:file:/home/emsenn/.npmrc
+6 silly config load:file:/home/emsenn/.local/etc/npmrc
+7 verbose title npm pack
+8 verbose argv "pack" "--dry-run" "--json" "--ignore-scripts"
+9 verbose logfile logs-max:10 dir:/home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-data-engineering-services-section/services/computer-content-engineering-services-section/services/computer-serialized-content-engineering-services-section/services/csv-services-section/data/logs/npm-cache/_logs/2026-10-24T18_44_58_509Z-
+10 verbose logfile /home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-data-engineering-services-section/services/computer-content-engineering-services-section/services/computer-serialized-content-engineering-services-section/services/csv-services-section/data/logs/npm-cache/_logs/2026-10-24T18_44_58_509Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:2036334592 maxSize:509083648 maxEntrySize:254541824
+13 verbose cwd /home/emsenn/bare-cedar-fog/lib/phezi-ochage/services/561-group/services/engineering-services-section/services/computer-engineering-services-section/services/computer-data-engineering-services-section/services/computer-content-engineering-services-section/services/computer-serialized-content-engineering-services-section/services/csv-services-section
+14 verbose os Linux 6.18.54.1-microsoft-standard-WSL2
+15 verbose node v24.19.0
+16 verbose npm  v11.17.0
+17 verbose exit 0
+18 info ok
