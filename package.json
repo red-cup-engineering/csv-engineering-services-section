@@ -1,6 +1,6 @@
 {
   "name": "@red-cup-engineering/csv-services-section",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "description": "Comma-separated values (RFC 4180): the one codec for CSV text to rows and records and back.",
   "repository": {
@@ -12,17 +12,20 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "json-to-csv": "./scripts/json_to_csv.py"
+    "json-to-csv": "./scripts/json_to_csv.py",
+    "csv-to-json": "./scripts/csv_to_json.py"
   },
   "files": [
     "README.md",
     "package.json",
     "scripts",
-    "test/test_json_to_csv.py"
+    "test/test_json_to_csv.py",
+    "test/test_csv_to_json.py"
   ],
   "scripts": {
     "test": "node --test test/*.test.mjs",
-    "test:python": "python3 -m pytest -q -p no:cacheprovider --basetemp=data/logs/json-to-csv-pytest test/test_json_to_csv.py"
+    "test:python": "python3 -m pytest -q -p no:cacheprovider --basetemp=data/logs/json-to-csv-pytest test/test_json_to_csv.py",
+    "test:csv-to-json": "python3 -m unittest discover -s test -p test_csv_to_json.py"
   },
   "sideEffects": false,
   "private": false,

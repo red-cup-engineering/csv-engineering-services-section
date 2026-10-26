@@ -63,3 +63,28 @@ This file adapter serves the requirements of the public
 that CLI; the existing JavaScript `jsonToCsv({records, columns})` contract still
 requires exactly the declared columns. Source preparation establishes no award,
 buyer acceptance or payment.
+
+## Python CSV-to-JSON CLI
+
+```sh
+python3 scripts/csv_to_json.py input.csv output.json
+python3 scripts/csv_to_json.py input-semicolon.csv output.json --delimiter ';' --indent 4
+python3 -m unittest discover -s test -p test_csv_to_json.py
+```
+
+The converter accepts headered UTF-8 (including a BOM), detects comma, semicolon,
+tab and pipe delimiters, and supports a literal single-character override. Use
+an actual tab in the delimiter argument. Every value remains a string, including
+leading zeros and empty cells. Quoted separators, doubled quotes, embedded
+newlines and Unicode are preserved. Empty files and header-only files yield an
+empty array. Indentation is configurable from 0 through 8 spaces.
+
+Duplicate or empty headers, inconsistent row widths, invalid quoting or UTF-8,
+and inputs over the default 1,048,576-byte ceiling fail with a diagnostic and
+nonzero exit code. `--maximum-bytes` selects another positive ceiling. Input is
+fully validated before a temporary output in the destination directory is
+atomically substituted, preserving the destination on invalid input.
+
+This package serves both directions of the original CSV business. It is prepared
+for the two public 100-USDC CSV-to-JSON requests; each buyer must agree the exact
+artifact, bounded semantics and machine acceptance before commissioned delivery.
