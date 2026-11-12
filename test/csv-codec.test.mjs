@@ -17,3 +17,14 @@ test("drops blank lines, pads short rows, refuses an unterminated quote", () => 
   assert.throws(() => decodeCsvRows('a\n"open'), SyntaxError);
   assert.equal(encodeCsv([]), "");
 });
+
+test("CSV source codec preserves the original BOM and quoted newlines", async () => {
+  const { csvSourceCodec } = await import("@red-cup-engineering/csv-services-section/source-codec");
+  const { verifyContentAddress } = await import("@red-cup-engineering/signcell/content-address/raw");
+  const bytes = Buffer.from('\uFEFFname,note\r\na,"line 1\r\nline 2"\r\n');
+  const reading = csvSourceCodec.read(bytes);
+  assert.deepEqual(reading.value.records, [{ name: "a", note: "line 1\r\nline 2" }]);
+  assert.equal(verifyContentAddress(bytes, reading.source), true);
+  assert.deepEqual(csvSourceCodec.write(reading.value).reading.value, reading.value);
+  assert.throws(() => csvSourceCodec.read(Buffer.from("a,a\r\n1,2\r\n")), /unique/);
+});

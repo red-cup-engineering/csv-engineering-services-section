@@ -6,6 +6,7 @@
  * @packageDocumentation
  */
 
+import { encodeUtf8Source } from "@red-cup-engineering/signcell/source-codec";
 /** Rows of fields. Blank lines are dropped; an unterminated quoted field is an error. */
 export function decodeCsvRows(text) {
   const source = text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
@@ -85,7 +86,7 @@ export function encodeCsv(records, { columns = records.length ? Object.keys(reco
 
 const limit = 65536;
 function bounded(text) {
-  if (typeof text !== "string" || !text.isWellFormed() || new TextEncoder().encode(text).length > limit) throw new TypeError("CSV conversion requires well-formed Unicode within 65536 UTF-8 bytes");
+  if (typeof text !== "string" || !text.isWellFormed() || encodeUtf8Source(text).length > limit) throw new TypeError("CSV conversion requires well-formed Unicode within 65536 UTF-8 bytes");
 }
 /** Convert a CSV header and rectangular rows, without silently dropping extra cells. */
 export function csvToJson(body) {

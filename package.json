@@ -9,7 +9,8 @@
   },
   "exports": {
     "./csv-codec": "./scripts/csv-codec.mjs",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./source-codec": "./scripts/source-codec.mjs"
   },
   "bin": {
     "json-to-csv": "./scripts/json_to_csv.py",
@@ -33,5 +34,8 @@
   "funding": {
     "type": "individual",
     "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
+  },
+  "dependencies": {
+    "@red-cup-engineering/signcell": "^0.17.5"
   }
 }
