@@ -19,7 +19,7 @@ test("drops blank lines, pads short rows, refuses an unterminated quote", () => 
 });
 
 test("CSV source codec preserves the original BOM and quoted newlines", async () => {
-  const { csvSourceCodec } = await import("@red-cup-engineering/csv-services-section/source-codec");
+  const { csvSourceCodec } = await import("@red-cup-engineering/csv-engineering-services-section/source-codec");
   const { verifyContentAddress } = await import("@red-cup-engineering/signcell/content-address/raw");
   const bytes = Buffer.from('\uFEFFname,note\r\na,"line 1\r\nline 2"\r\n');
   const reading = csvSourceCodec.read(bytes);
