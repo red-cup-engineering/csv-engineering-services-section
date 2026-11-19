@@ -1,0 +1,35 @@
+{
+  "name": "@red-cup-engineering/csv-engineering-services-section",
+  "version": "0.1.7-dev.0",
+  "type": "module",
+  "description": "Comma-separated values (RFC 4180): the one codec for CSV text to rows and records and back.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-cup-engineering/csv-engineering-services-section.git"
+  },
+  "exports": {
+    "./csv-codec": "./scripts/csv-codec.mjs",
+    "./package.json": "./package.json",
+    "./source-codec": "./scripts/source-codec.mjs"
+  },
+  "bin": {
+    "json-to-csv": "./scripts/json_to_csv.py",
+    "csv-to-json": "./scripts/csv_to_json.py"
+  },
+  "files": [
+    "README.md",
+    "package.json",
+    "scripts"
+  ],
+  "sideEffects": false,
+  "private": false,
+  "license": "MIT",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
+  },
+  "dependencies": {
+    "@red-cup-engineering/signcell": "^0.17.5",
+    "@red-cup-engineering/typed-content": "0.1.0-dev.0"
+  }
+}
