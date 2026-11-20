@@ -53,7 +53,7 @@ export function decodeCsv(text) {
 
 const LINE_ENDINGS = ["\n", "\r\n"];
 const QUOTINGS = ["all", "minimal"];
-function validateFormat(lineEnding, quoting) {
+function admitFormat(lineEnding, quoting) {
   if (!LINE_ENDINGS.includes(lineEnding)) throw new TypeError("CSV line ending must be LF or CRLF");
   if (!QUOTINGS.includes(quoting)) throw new TypeError('CSV quoting must be "all" or "minimal"');
 }
@@ -61,7 +61,7 @@ function validateFormat(lineEnding, quoting) {
 /** One field as RFC 4180 text: always quoted (`quoting: "all"`), or quoted only when it holds a comma,
  *  a double quote, CR or LF (`quoting: "minimal"`). A missing value (null, undefined) is the empty field. */
 export function encodeCsvField(value, { quoting = "all" } = {}) {
-  validateFormat("\n", quoting);
+  admitFormat("\n", quoting);
   const text = String(value ?? "");
   return quoting === "all" || /[",\r\n]/u.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 }
@@ -69,7 +69,7 @@ export function encodeCsvField(value, { quoting = "all" } = {}) {
 /** Rows of fields (a header row is just the first row) as CSV text, one line ending after every row,
  *  fields quoted only where RFC 4180 needs it unless `quoting: "all"`. No rows is the empty text. */
 export function encodeCsvRows(rows, { lineEnding = "\n", quoting = "minimal" } = {}) {
-  validateFormat(lineEnding, quoting);
+  admitFormat(lineEnding, quoting);
   return rows.map((row) => `${row.map((field) => encodeCsvField(field, { quoting })).join(",")}${lineEnding}`).join("");
 }
 
@@ -79,7 +79,7 @@ export function encodeCsvRows(rows, { lineEnding = "\n", quoting = "minimal" } =
  * record's keys.
  */
 export function encodeCsv(records, { columns = records.length ? Object.keys(records[0]) : [], lineEnding = "\n", quoting = "all" } = {}) {
-  validateFormat(lineEnding, quoting);
+  admitFormat(lineEnding, quoting);
   if (records.length === 0) return "";
   return encodeCsvRows([columns, ...records.map((record) => columns.map((column) => record[column]))], { lineEnding, quoting });
 }
